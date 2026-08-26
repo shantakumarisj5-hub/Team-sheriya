@@ -1,18 +1,13 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
+import { FlatCompat } from "@eslint/eslintrc";
 
-export default defineConfig([
-  ...nextVitals,
+const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
+
+export default [
+  ...compat.extends("next/core-web-vitals"),
   {
     rules: {
       "react/display-name": "off",
     },
   },
-  globalIgnores([
-    ".next/**",
-    "node_modules/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+  { ignores: [".next/**", "node_modules/**", "out/**", "build/**", "next-env.d.ts"] },
+];

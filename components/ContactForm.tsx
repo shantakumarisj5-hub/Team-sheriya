@@ -67,7 +67,7 @@ export default function ContactForm() {
             Start Your Project
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-            Tell us about your project and we'll get back to you within 24 hours
+            Tell us about your project and we&apos;ll get back to you within 24 hours
           </p>
         </motion.div>
 
@@ -81,7 +81,7 @@ export default function ContactForm() {
           >
             <Card className="hover:shadow-xl transition-shadow duration-300">
               <CardContent className="pt-6">
-                <h3 className="text-2xl font-bold mb-6">Let's Talk</h3>
+                <h3 className="text-2xl font-bold mb-6">Let&apos;s Talk</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
@@ -124,7 +124,7 @@ export default function ContactForm() {
                 <CheckCircle className="w-6 h-6" />
                 <div>
                   <p className="font-bold">Thank you!</p>
-                  <p className="text-sm">We'll contact you soon.</p>
+                  <p className="text-sm">We&apos;ll contact you soon.</p>
                 </div>
               </motion.div>
             )}

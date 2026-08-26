@@ -1,78 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const enquirySchema = z.object({
+  service: z.string().trim().min(1).max(100),
+  name: z.string().trim().min(2).max(100),
+  email: z.string().trim().email().max(254),
+  budget: z.string().trim().min(1).max(100),
+  message: z.string().trim().min(10).max(5_000),
+});
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  return url && serviceRoleKey ? createClient(url, serviceRoleKey) : null;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    
-    console.log("📩 Received enquiry:", body);
-    
-    // Save to Supabase
-    const { data, error } = await supabase
-      .from('enquiries')
-      .insert({
-        service: body.service,
-        name: body.name,
-        email: body.email,
-        budget: body.budget,
-        message: body.message,
-        status: 'new',
-      })
-      .select()
-      .single();
-    
-    if (error) {
-      console.error("❌ Supabase error:", error);
-      throw error;
+    const result = enquirySchema.safeParse(await request.json());
+    if (!result.success) {
+      return NextResponse.json({ success: false, message: "Please check the form fields and try again." }, { status: 400 });
     }
-    
-    console.log("✅ Saved to Supabase:", data.id);
-    
-    return NextResponse.json({ 
-      success: true, 
-      message: "Enquiry received successfully",
-      data: data
-    });
-  } catch (error) {
-    console.error("❌ Error saving enquiry:", error);
-    return NextResponse.json(
-      { success: false, message: "Error saving enquiry" },
-      { status: 500 }
-    );
-  }
-}
 
-export async function GET() {
-  try {
-    console.log("📊 Fetching all enquiries from Supabase...");
-    
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
-    
-    const { data, error } = await supabase
-      .from('enquiries')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error("❌ Supabase error:", error);
-      throw error;
+    const supabase = getSupabase();
+    if (!supabase) {
+      console.error("Enquiry service is not configured.");
+      return NextResponse.json({ success: false, message: "The enquiry service is temporarily unavailable." }, { status: 503 });
     }
-    
-    console.log("✅ Found", data?.length || 0, "enquiries");
-    
-    return NextResponse.json({ enquiries: data || [] });
+
+    const { error } = await supabase.from("enquiries").insert({ ...result.data, status: "new" });
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, message: "Enquiry received successfully" });
   } catch (error) {
-    console.error("❌ Error fetching enquiries:", error);
-    return NextResponse.json(
-      { success: false, message: "Error fetching enquiries" },
-      { status: 500 }
-    );
+    console.error("Error saving enquiry:", error);
+    return NextResponse.json({ success: false, message: "Error saving enquiry" }, { status: 500 });
   }
 }
