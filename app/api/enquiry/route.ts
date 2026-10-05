@@ -8,6 +8,7 @@ const enquirySchema = z.object({
   email: z.string().trim().email().max(254),
   budget: z.string().trim().min(1).max(100),
   message: z.string().trim().min(10).max(5_000),
+  privacyConsent: z.literal(true),
 });
 
 function getSupabase() {
@@ -29,7 +30,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "The enquiry service is temporarily unavailable." }, { status: 503 });
     }
 
-    const { error } = await supabase.from("enquiries").insert({ ...result.data, status: "new" });
+    const { privacyConsent: _privacyConsent, ...enquiry } = result.data;
+    const { error } = await supabase.from("enquiries").insert({ ...enquiry, status: "new" });
     if (error) throw error;
 
     return NextResponse.json({ success: true, message: "Enquiry received successfully" });

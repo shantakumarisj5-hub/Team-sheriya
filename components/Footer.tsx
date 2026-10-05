@@ -1,73 +1,44 @@
 "use client";
 
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Heart, Mail } from "lucide-react";
+
+const links = [
+  { label: "Services", id: "services" },
+  { label: "Product partner", id: "product" },
+  { label: "Selected work", id: "projects" },
+  { label: "Contact", id: "contact" },
+];
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const scrollToSection = (id: string) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="py-16 bg-gray-900 text-white">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
-          <div className="md:col-span-2">
-            <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              TEAM SHERIYA
-            </h3>
-            <p className="text-gray-400 mb-6 max-w-md">
-              Building digital experiences that matter. We specialize in web development, full-stack solutions, and creative video editing.
-            </p>
-            <div className="flex space-x-4">
-              <Button variant="outline" size="icon" className="rounded-full border-gray-700 hover:bg-gray-800">
-                <Github className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full border-gray-700 hover:bg-gray-800">
-                <Linkedin className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full border-gray-700 hover:bg-gray-800">
-                <Mail className="w-5 h-5" />
-              </Button>
+    <footer className="border-t border-white/10 bg-[#0d0b10] px-6 py-12 text-[#fffaf3] md:px-8 md:py-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-12 md:grid-cols-[1.25fr_0.75fr_0.75fr]">
+          <div>
+            <p className="text-sm font-semibold tracking-[0.18em]">TEAM SHERIYA</p>
+            <p className="mt-5 max-w-sm text-lg leading-7 text-[#c8c0d1]">Digital experiences, products, and content with a clear purpose.</p>
+            <div className="mt-7 flex gap-3">
+              <a href="mailto:contact@teamsheriya.com" aria-label="Email Team Sheriya" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-[#c8c0d1] transition hover:border-[#ffb56b] hover:bg-[#ffb56b] hover:text-[#20181f]"><Mail size={17} /></a>
             </div>
           </div>
-          
           <div>
-            <h4 className="font-bold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li><button onClick={() => scrollToSection("#services")} className="hover:text-white transition">Services</button></li>
-              <li><button onClick={() => scrollToSection("#projects")} className="hover:text-white transition">Projects</button></li>
-              <li><button onClick={() => scrollToSection("#team")} className="hover:text-white transition">Team</button></li>
-              <li><button onClick={() => scrollToSection("#contact")} className="hover:text-white transition">Contact</button></li>
-            </ul>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb56b]">Explore</p>
+            <div className="mt-5 flex flex-col items-start gap-3">
+              {links.map((link) => <button key={link.id} type="button" onClick={() => scrollTo(link.id)} className="text-sm text-[#c8c0d1] transition hover:text-white">{link.label}</button>)}
+            </div>
           </div>
-          
           <div>
-            <h4 className="font-bold text-lg mb-4">Services</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li>Web Development</li>
-              <li>Full-Stack Development</li>
-              <li>Video Editing</li>
-              <li>UI/UX Design</li>
-            </ul>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ffb56b]">Have an idea?</p>
+            <a href="mailto:contact@teamsheriya.com" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-[#ffb56b]">contact@teamsheriya.com <ArrowUpRight size={16} /></a>
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="mt-8 block text-sm text-[#c8c0d1] underline decoration-[#ffb56b]/50 underline-offset-4 transition hover:text-white">Back to top</button>
           </div>
         </div>
-        
-        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm">
-            © 2026 TEAM SHERIYA. Made with <Heart className="inline w-4 h-4 text-red-500" /> by Team Sheriya.
-          </p>
-          <Button 
-            onClick={scrollToTop}
-            variant="outline" 
-            className="border-gray-700 hover:bg-gray-800"
-          >
-            Back to Top
-          </Button>
+        <div className="mt-14 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-xs text-[#958b9f] md:flex-row">
+          <p>© {new Date().getFullYear()} Team Sheriya. All rights reserved.</p>
+          <p className="flex items-center gap-1">Made with <Heart size={12} className="fill-[#ffb56b] text-[#ffb56b]" /> for ambitious ideas.</p>
         </div>
       </div>
     </footer>

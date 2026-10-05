@@ -1,97 +1,151 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Github, Linkedin, Mail, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 
 const team = [
   {
     name: "Tarunkumar S",
-    role: "Founder & Full-Stack Developer",
-    skills: ["Full Stack", "Backend", "Automation", "Project Management"],
-    bio: "Passionate about building scalable web applications and leading teams to success.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+    role: "Founder · Full-Stack Developer",
+    image: "/images/team/tarun.jpeg",
+    bio: "Builds scalable web products, backend systems, and automation workflows that help businesses operate with clarity.",
+    skills: ["Full-Stack", "Backend", "Automation"],
+    github: "#",
+    linkedin: "#",
+    email: "mailto:contact@teamsheriya.com",
   },
   {
     name: "Shantakumari S J",
-    role: "Co-Founder & UI/UX Designer",
-    skills: ["UI/UX", "Frontend", "Design", "Client Relations"],
-    bio: "Creative designer with expertise in crafting beautiful and user-friendly interfaces.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400",
+    role: "Co-Founder · UI/UX Designer",
+    image: "/images/team/shantakumari.jpeg",
+    bio: "Designs thoughtful, user-friendly interfaces that make digital products feel clear, distinctive, and easy to trust.",
+    skills: ["UI/UX", "Frontend", "Brand Systems"],
+    github: "#",
+    linkedin: "#",
+    email: "mailto:contact@teamsheriya.com",
   },
 ];
 
 export default function TeamSection() {
   return (
-    <section id="team" className="py-24 bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full mb-4">
-            <Sparkles size={18} />
-            <span className="text-sm font-medium">Meet Our Team</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-            Meet Our Founders
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-            The minds behind TEAM SHERIYA
-          </p>
-        </motion.div>
+    <section
+      id="team"
+      className="relative border-t border-[#DBC3A8]/15 bg-transparent py-24 text-[#F7F2EC] md:py-32"
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Heading */}
+        <div className="grid gap-8 border-b border-[#DBC3A8]/15 pb-12 md:grid-cols-12 md:items-end md:pb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.55 }}
+            className="md:col-span-4"
+          >
+            <p className="text-xs font-medium uppercase tracking-[0.28em] text-[#DBC3A8]">
+              The studio
+            </p>
+          </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, delay: 0.08 }}
+            className="md:col-span-8"
+          >
+            <h2 className="max-w-4xl font-[family-name:var(--font-display)] text-4xl font-semibold leading-[0.98] tracking-[-0.055em] md:text-6xl lg:text-7xl">
+              A small studio with a clear standard for how digital work should
+              feel.
+            </h2>
+          </motion.div>
+        </div>
+
+        <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
           {team.map((member, index) => (
-            <motion.div
+            <motion.article
               key={member.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="transition-all duration-300"
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: index * 0.08 }}
+              whileHover={{ y: -4 }}
+              className="group rounded-2xl border border-[#DBC3A8]/15 bg-[#2A2433]/55 p-5 transition duration-300 hover:border-[#DBC3A8]/35 hover:bg-[#2A2433]/75 md:p-6"
             >
-              <Card className="text-center hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-blue-500 to-cyan-500">
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${member.image})` }}
+              <div className="flex items-start gap-5">
+                {/* Medium profile photo */}
+                <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl border border-[#DBC3A8]/20 bg-[#362E42] shadow-lg md:h-28 md:w-28">
+                  <img
+                    src={member.image}
+                    alt={`Portrait of ${member.name}`}
+                    width={224}
+                    height={224}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
-                <CardContent className="pt-6 -mt-16 relative">
-                  <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-white dark:border-gray-900 shadow-xl">
-                    <AvatarFallback className="text-4xl">{member.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
-                  <p className="text-blue-600 dark:text-blue-400 font-medium mb-4">{member.role}</p>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">{member.bio}</p>
-                  <div className="flex flex-wrap gap-2 mb-6 justify-center">
-                    {member.skills.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex justify-center gap-4">
-                    <Button variant="outline" size="icon" className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                      <Github size={20} />
-                    </Button>
-                    <Button variant="outline" size="icon" className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                      <Linkedin size={20} />
-                    </Button>
-                    <Button variant="outline" size="icon" className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                      <Mail size={20} />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+
+                <div className="min-w-0 pt-1">
+                  <p className="text-xs uppercase tracking-[0.16em] text-[#B9AFC2]">
+                    {index === 0 ? "01 / Founder" : "02 / Co-Founder"}
+                  </p>
+
+                  <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-semibold tracking-[-0.035em] text-[#F7F2EC]">
+                    {member.name}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-[#DBC3A8]">{member.role}</p>
+                </div>
+              </div>
+
+              <p className="mt-6 max-w-lg text-sm leading-7 text-[#B9AFC2]">
+                {member.bio}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {member.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-[#DBC3A8]/15 bg-[#201C26]/25 px-3 py-1.5 text-[11px] text-[#EFE0CD]"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-7 flex items-center justify-between border-t border-[#DBC3A8]/10 pt-5">
+                <div className="flex gap-2.5">
+                  <a
+                    href={member.github}
+                    aria-label={`${member.name} GitHub`}
+                    className="rounded-full border border-[#DBC3A8]/15 p-2.5 text-[#B9AFC2] transition hover:border-[#DBC3A8]/50 hover:bg-[#DBC3A8]/10 hover:text-[#DBC3A8]"
+                  >
+                    <Github size={16} />
+                  </a>
+
+                  <a
+                    href={member.linkedin}
+                    aria-label={`${member.name} LinkedIn`}
+                    className="rounded-full border border-[#DBC3A8]/15 p-2.5 text-[#B9AFC2] transition hover:border-[#DBC3A8]/50 hover:bg-[#DBC3A8]/10 hover:text-[#DBC3A8]"
+                  >
+                    <Linkedin size={16} />
+                  </a>
+
+                  <a
+                    href={member.email}
+                    aria-label={`Email ${member.name}`}
+                    className="rounded-full border border-[#DBC3A8]/15 p-2.5 text-[#B9AFC2] transition hover:border-[#DBC3A8]/50 hover:bg-[#DBC3A8]/10 hover:text-[#DBC3A8]"
+                  >
+                    <Mail size={16} />
+                  </a>
+                </div>
+
+                <ArrowUpRight
+                  size={18}
+                  className="text-[#B9AFC2] transition duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#DBC3A8]"
+                />
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>
